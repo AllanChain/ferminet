@@ -15,6 +15,7 @@
 
 import contextlib
 import os
+import time
 from typing import Mapping, Optional, Sequence
 
 from absl import logging
@@ -44,6 +45,11 @@ class Writer(contextlib.AbstractContextManager):
     if not os.path.isdir(directory):
       os.mkdir(directory)
     self._filename = os.path.join(directory, name + '.csv')
+    if os.path.exists(self._filename):
+      formatted_mtime = time.strftime(
+        '%Y%m%d-%H%M%S', time.localtime(os.path.getmtime(self._filename))
+      )
+      os.rename(self._filename, os.path.join(directory, f'{name}.{formatted_mtime}.csv'))
     self._iteration_key = iteration_key
     self._log = log
 

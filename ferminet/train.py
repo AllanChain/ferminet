@@ -602,6 +602,9 @@ def train(cfg: ml_collections.ConfigDict, writer_manager=None):
     logging.info('Setting initial iteration to 0.')
     t_init = 0
 
+  if t_init >= cfg.optim.iterations:  # prevent overwriting
+    return
+
   if writer_manager is None:
     writer_manager = writers.Writer(
         name='train_stats',
@@ -661,3 +664,4 @@ def train(cfg: ml_collections.ConfigDict, writer_manager=None):
       if time.time() - time_of_last_ckpt > cfg.log.save_frequency * 60:
         checkpoint.save(ckpt_save_path, t, data, params, opt_state, mcmc_width)
         time_of_last_ckpt = time.time()
+    checkpoint.save(ckpt_save_path, t, data, params, opt_state, mcmc_width)
