@@ -27,7 +27,7 @@ REQUIRED_PACKAGES = [
     'jax',
     'jaxlib',
     # TODO(b/230487443) - use released version of kfac.
-    'kfac_jax @ git+https://github.com/deepmind/kfac-jax',
+    'kfac_jax @ git+https://ghproxy.com/github.com/deepmind/kfac-jax',
     'ml-collections',
     'optax',
     'numpy',
